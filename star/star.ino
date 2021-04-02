@@ -5,8 +5,7 @@
 #define COLOR_ORDER GRB
 #define CHIPSET     WS2812B
 #define NUM_LEDS    120
-
-#define BRIGHTNESS  150
+#define BRIGHTNESS  128
 
 
 CRGB leds[NUM_LEDS];
@@ -24,20 +23,20 @@ void setup() {
   current_hue = 0;
   previous_state1 = 255;
   previous_state2 = 255;
-  FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
+  FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip).setTemperature(HighNoonSun);
   FastLED.setBrightness(BRIGHTNESS);
 }
 
 void loop() {
   random16_add_entropy(random());
-  uint8_t r = random8(8);
+  uint8_t r = random8(9);
   do {
-    r = random8(8);
+    r = random8(9);
   } while(r == previous_state1 || r == previous_state2);
   previous_state2 = previous_state1;
   previous_state1 = r;
   switch(r) {
-    case 0: blast(20); break;
+    case 0: blast(15); break;
     case 1: caterpillar(60); break;
     case 2: spiral(30); break;
     case 3: burst(20); break;
@@ -45,6 +44,7 @@ void loop() {
     case 5: ripple(30); break;
     case 6: tunnel(60); break;
     case 7: fire(40); break;
+    case 8: snowfall(15); break;
   }
 }
 
@@ -102,6 +102,71 @@ void burst(int frames_per_second) {
   }
 }
 
+void snowfall(int frames_per_second) {
+  float snow_x[5];
+  float snow_y[5];
+  float snow_r[5];
+  float snow_v[5];
+  float level = -0.8;
+  CRGB background = CRGB{0, 64, 192};
+  CRGB snow_color = CRGB(144, 250, 250);
+  for (int i = 0; i < 120; i++) {
+    leds[i] = background;
+  }
+  FastLED.show();
+  FastLED.delay(1000 / frames_per_second);
+  for (int i_snow = 0; i_snow < 5; i_snow++) {
+    snow_x[i_snow] = 0.8 * ((float)random8() / 128 - 1);
+    snow_y[i_snow] = (float)random8() / 512 + 0.6;
+    snow_r[i_snow] = 0.08 + (float)random8(16) / 320;
+    snow_v[i_snow] = 0.005 + (float)random8(16) / 1024;
+  }
+  int n_frames = frames_per_second * 30;
+  for (int i_frame = 0; i_frame < n_frames; i_frame++) {
+    for (int i_snow = 0; i_snow < 5; i_snow++) {
+      snow_y[i_snow] -= snow_v[i_snow];
+      if (snow_y[i_snow] < level) {
+        snow_x[i_snow] = 0.8 * ((float)random8() / 128 - 1);
+        snow_y[i_snow] = (float)random8() / 512 + 0.6;
+        snow_r[i_snow] = 0.1 + (float)random8(16) / 320;
+        snow_v[i_snow] = 0.02 + (float)random8(16) / 1024;
+      }
+    }
+    level += 0.002;
+    if (level > 0.1) {
+      level = -0.8;
+    }
+    for (int i = 0; i < 120; i++) {
+      float snow_weight = 1;
+      if (Y_COORDS[i] > level) {
+        snow_weight = 1 - 10 * (Y_COORDS[i] - level);
+        if (snow_weight < 0) {
+          snow_weight = 0;
+        }
+        for (int i_snow = 0; i_snow < 5; i_snow++) {
+          float d = (X_COORDS[i] - snow_x[i_snow]) * (X_COORDS[i] - snow_x[i_snow]) + (Y_COORDS[i] - snow_y[i_snow]) * (Y_COORDS[i] - snow_y[i_snow]);
+          float delta = 1 - (d / (snow_r[i_snow] * snow_r[i_snow]));
+          if (delta > 0) {
+            snow_weight += delta;
+          }
+        }
+        if (snow_weight > 1) {
+          snow_weight = 1;
+        } else if (snow_weight < 0.1) {
+          snow_weight = 0;
+        }
+      }
+      if (snow_weight == 1) {
+        leds[i] = snow_color;
+      } else {
+        leds[i] = interpolate_colors(background, snow_color, snow_weight);
+      }
+    }
+    FastLED.show();
+    FastLED.delay(1000 / frames_per_second);
+  }
+}
+
 void blast(int frames_per_second) {
   CRGB radial_colors[12] = {CRGB::Black};
   int n_frames = frames_per_second * 30;
@@ -109,7 +174,7 @@ void blast(int frames_per_second) {
     for(int r = 11; r > 0; r--) {
       radial_colors[r] = radial_colors[r-1];
     }
-    radial_colors[0] = get_next_color(random8(8, 16), 180, 180);
+    radial_colors[0] = get_next_color(random8(4, 8), 180, 180);
     for(int r = 0; r < 12; r++) {
       CRGB color = radial_colors[r];
       for(int arm = 0; arm < 5; arm++) {
