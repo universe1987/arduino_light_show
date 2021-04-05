@@ -16,6 +16,7 @@ UniformEffect::UniformEffect(int period) : period(period), i_frame(0) {
 int UniformEffect::next_hue() const { return (hue + random8(32, 224)) % 256; }
 
 void UniformEffect::next_state() {
+    ++ i_frame;
     if (i_frame == period) {
         i_frame = 0;
         previous_color = next_color;

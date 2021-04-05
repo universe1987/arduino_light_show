@@ -21,6 +21,7 @@ BurstEffect::~BurstEffect() { delete[] spectrum; }
 int BurstEffect::next_hue() const { return (hue + random8(32, 224)) % 256; }
 
 void BurstEffect::next_state() {
+    ++i_frame;
     if (i_frame == 128) {
         i_frame = 0;
         hue = next_hue();
