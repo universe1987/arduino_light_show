@@ -6,23 +6,19 @@
 namespace LEDGeometry {
 class LEDCurve;
 
-class BurstEffect : public LightEffect {
+class UniformEffect : public LightEffect {
    public:
-    BurstEffect(float r_min, float r_max, int resolution);
-    ~BurstEffect();
+    UniformEffect(int period);
     int next_hue() const;
     void next_state();
     void set_color(LEDCurve* ledCurve);
 
    private:
-    float r_min;
-    float r_max;
-    int resolution;
+    int period;
     int i_frame;
-    int pos;
     int hue;
+    CRGB previous_color;
     CRGB current_color;
-    CRGB future_color;
-    CRGB* spectrum;
+    CRGB next_color;
 };
 }  // namespace LEDGeometry
