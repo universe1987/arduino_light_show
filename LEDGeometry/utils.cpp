@@ -15,8 +15,4 @@ namespace LEDGeometry {
         int b = lhs.b * (1 - weight_of_rhs) + rhs.b * weight_of_rhs;
         return CRGB{(uint8_t)r, (uint8_t)g, (uint8_t)b};
     }
-
-    CRGB random_bright_color() {
-
-    }
 }

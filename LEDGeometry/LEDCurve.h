@@ -22,7 +22,7 @@ class LEDCurve {
     void set_effect(LightEffect* effect, int n_seconds, int fps) {
         int sleep_ms = 1000 / fps;
         for (int i = 0; i < n_seconds * fps; i++) {
-            effect->set_color(this);
+            effect->update_leds(this);
             effect->next_state();
             FastLED.show();
             FastLED.delay(sleep_ms);

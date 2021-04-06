@@ -1,9 +1,10 @@
 #include "LEDCurve.h"
 #include "GenericShape.h"
-#include "UniformEffect.h"
+#include "WaveEffect0D.h"
+#include "WaveEffect1D.h"
+
 #include <math.h>
 #include <FastLED.h>
-
 
 #define LED_PIN     7
 #define COLOR_ORDER GRB
@@ -14,8 +15,8 @@
 using namespace LEDGeometry;
 
 CRGB leds[NUM_LEDS];
-GenericShape s{120};
-LEDCurve my_light(leds, &s);
+Shape* shape = new GenericShape(NUM_LEDS);
+LEDCurve my_light(leds, shape);
 
 void setup() {
   delay(3000); // sanity delay
@@ -24,8 +25,11 @@ void setup() {
 }
 
 void loop() {
-  LightEffect* effect = new UniformEffect(32);
+  LightEffect* effect1 = new WaveEffect0D(10);
   // 30 fps for 60 seconds
-  my_light.set_effect(effect, 60, 30);
-  delete effect;
+  my_light.set_effect(effect1, 30, 10);
+  delete effect1;
+  LightEffect* effect2 = new WaveEffect1D(10);
+  my_light.set_effect(effect2, 30, 10);
+  delete effect2;
 }
