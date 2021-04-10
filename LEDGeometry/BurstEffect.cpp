@@ -37,7 +37,7 @@ void BurstEffect::next_state() {
 }
 
 void BurstEffect::set_color(LEDCurve *ledCurve) {
-    for (int i = 0; i < ledCurve->n_leds(); i++) {
+    for (int i = 0; i < ledCurve->n_points(); i++) {
         float r = ledCurve->r(i);
         int projection =
             (int)((resolution - 1) * (r - r_min) / (r_max - r_min));
