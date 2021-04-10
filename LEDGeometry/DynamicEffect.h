@@ -6,12 +6,12 @@
 namespace LEDGeometry {
 class LEDCurve;
 
-class GradualChangingColorEffect : public LightEffect {
+class DynamicEffect : public LightEffect {
    public:
-    GradualChangingColorEffect(int period);
+    DynamicEffect(int period);
     int next_hue() const;
     virtual void next_state();
-    virtual void update_leds(LEDCurve* ledCurve) = 0;
+    virtual void set_colors(LEDCurve* ledCurve) = 0;
     const CRGB& get_color() const { return color; }
 
    private:

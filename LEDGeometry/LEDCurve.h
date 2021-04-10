@@ -7,7 +7,7 @@
 namespace LEDGeometry {
 class LEDCurve {
    public:
-    LEDCurve(CRGB* leds, Shape* shape) : leds_(leds), shape_(shape){};
+    LEDCurve(CRGB* leds, Shape* shape, bool folded) : leds_(leds), shape_(shape), folded(folded) {};
     ~LEDCurve() {
         delete leds_;
         delete shape_;
@@ -15,7 +15,8 @@ class LEDCurve {
 
     CRGB* leds() { return leds_; }
     Shape* shape() { return shape_; }
-    int n_leds() const { return shape_->n_points(); };
+    bool is_folded() { return folded; }
+    int n_points() const { return shape_->n_points(); };
     float x(int i) const { return shape_->x(i); }
     float y(int i) const { return shape_->y(i); }
     float r(int i) const { return shape_->r(i); }
@@ -32,5 +33,6 @@ class LEDCurve {
    private:
     CRGB* leds_;
     Shape* shape_;
+    bool folded;
 };
 }  // namespace LEDGeometry
