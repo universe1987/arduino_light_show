@@ -21,7 +21,7 @@ LEDCurve my_light(leds, shape, true);
 
 void setup() {
   delay(3000); // sanity delay
-  FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(my_light.leds(), my_light.n_leds()).setCorrection(TypicalLEDStrip).setTemperature(HighNoonSun);
+  FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(my_light.leds(), NUM_LEDS).setCorrection(TypicalLEDStrip).setTemperature(HighNoonSun);
   FastLED.setBrightness(BRIGHTNESS);
 }
 
