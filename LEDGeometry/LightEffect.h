@@ -1,13 +1,12 @@
 #pragma once
 
 namespace LEDGeometry {
-class LEDCurve;
-
+class LEDInterface;
 class LightEffect {
-public:
+   public:
     virtual ~LightEffect() {}
     virtual void next_state() = 0;
-    virtual void set_colors(LEDCurve* ledCurve) = 0;
-    void update_leds(LEDCurve* ledCurve);
+    virtual void set_colors(LEDInterface* ledCurve) = 0;
+    void update_leds(LEDInterface* ledCurve);
 };
-}
+}  // namespace LEDGeometry

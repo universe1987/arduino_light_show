@@ -3,9 +3,10 @@
 
 #include "Shape.h"
 #include "LightEffect.h"
+#include "LEDInterface.h"
 
 namespace LEDGeometry {
-class LEDCurve {
+class LEDCurve : public LEDInterface {
    public:
     LEDCurve(CRGB* leds, Shape* shape, bool folded) : leds_(leds), shape_(shape), folded(folded) {};
     ~LEDCurve() {
@@ -22,8 +23,9 @@ class LEDCurve {
     float r(int i) const { return shape_->r(i); }
     void set_effect(LightEffect* effect, int n_seconds, int fps) {
         int sleep_ms = 1000 / fps;
+        LEDInterface* led_ptr = this;
         for (int i = 0; i < n_seconds * fps; i++) {
-            effect->update_leds(this);
+            effect->update_leds(led_ptr);
             effect->next_state();
             FastLED.show();
             FastLED.delay(sleep_ms);

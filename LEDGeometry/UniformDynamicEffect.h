@@ -4,11 +4,11 @@
 #include "DynamicEffect.h"
 
 namespace LEDGeometry {
-class LEDCurve;
+class LEDInterface;
 
 class UniformDynamicEffect : public DynamicEffect {
    public:
     UniformDynamicEffect(int period);
-    void set_colors(LEDCurve* ledCurve);
+    void set_colors(LEDInterface* ledCurve);
 };
 }  // namespace LEDGeometry

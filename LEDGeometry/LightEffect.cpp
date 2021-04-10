@@ -1,9 +1,9 @@
 #include "LightEffect.h"
-#include "LEDCurve.h"
 
+#include "LEDInterface.h"
 namespace LEDGeometry {
 
-void LightEffect::update_leds(LEDCurve* ledCurve) {
+void LightEffect::update_leds(LEDInterface* ledCurve) {
     set_colors(ledCurve);
     if (ledCurve->is_folded()) {
         int n_points = ledCurve->n_points();
@@ -13,4 +13,4 @@ void LightEffect::update_leds(LEDCurve* ledCurve) {
         }
     }
 }
-}
+}  // namespace LEDGeometry
