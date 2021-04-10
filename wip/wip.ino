@@ -27,11 +27,11 @@ void setup() {
 
 void loop() {
   // 10 fps for 30 seconds, color change every 50 frames
-  LightEffect* effect1 = new UniformDynamicEffect(50);
+  LightEffect* effect1 = new UniformDynamicEffect(100);
   my_light.set_effect(effect1, 30, 10);
   delete effect1;
   // 10 fps for 30 seconds, color change every 60 frames
   LightEffect* effect2 = new SignalTransmissionEffect(60);
-  my_light.set_effect(effect2, 30, 10);
+  my_light.set_effect(effect2, 30, 15);
   delete effect2;
 }

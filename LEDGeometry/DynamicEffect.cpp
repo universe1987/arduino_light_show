@@ -17,7 +17,8 @@ int DynamicEffect::next_hue() const { return (hue + random8(32, 224)) % 256; }
 
 void DynamicEffect::next_state() {
     ++progress;
-    if (progress == 0) {
+    if (progress == period) {
+        progress = 0;
         previous_color = next_color;
         hue = next_hue();
         next_color = bright_color(hue);
