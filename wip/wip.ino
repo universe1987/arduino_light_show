@@ -2,6 +2,7 @@
 #include "GenericShape.h"
 #include "UniformDynamicEffect.h"
 #include "SignalTransmissionEffect.h"
+#include "PulseEffect.h"
 
 #include <math.h>
 #include <FastLED.h>
@@ -34,4 +35,6 @@ void loop() {
   LightEffect* effect2 = new SignalTransmissionEffect(60);
   my_light.set_effect(effect2, 30, 15);
   delete effect2;
+  LightEffect* effect3 = new PulseEffect(60);
+  my_light.set_effect(effect3, 30, 16);
 }
