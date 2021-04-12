@@ -2,12 +2,15 @@
 
 #include <FastLED.h>
 
-#include "LEDInterface.h"
+#include "LEDCurve.h"
 #include "utils.h"
 
 namespace LEDGeometry {
 
-PulseEffect::PulseEffect(int period) : DynamicEffect(period), clock(0) {}
+PulseEffect::PulseEffect(int period, int min_hue_delta, int max_hue_delta)
+    : DynamicEffect(period, min_hue_delta, max_hue_delta), clock(0) {}
+
+PulseEffect::PulseEffect(int period) : PulseEffect(period, 32, 224) {}
 
 int PulseEffect::get_brightness() const {
     int input_signal = 0;
@@ -24,10 +27,10 @@ int PulseEffect::get_brightness() const {
             input_signal = (clock - 4) * 32;
         }
     }
-    return quadwave8((uint8_t) input_signal);
+    return quadwave8((uint8_t)input_signal);
 }
 
-void PulseEffect::set_colors(LEDInterface* ledCurve) {
+void PulseEffect::set_colors(LEDCurve* ledCurve) {
     CRGB color = get_current_color();
     color.fadeLightBy(256 - get_brightness());
     for (int i = 0; i < ledCurve->n_points(); i++) {

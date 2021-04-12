@@ -15,7 +15,7 @@
 
 using namespace LEDGeometry;
 
-CRGB leds[NUM_LEDS];
+CRGB* leds = new CRGB[NUM_LEDS];
 // create a folded led curve, so the shape has half of the points
 Shape* shape = new GenericShape(NUM_LEDS / 2);
 LEDCurve my_light(leds, shape, true);

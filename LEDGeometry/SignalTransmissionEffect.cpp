@@ -1,22 +1,27 @@
 #include "SignalTransmissionEffect.h"
 
-#include "LEDInterface.h"
+#include "LEDCurve.h"
 #include "utils.h"
 
 namespace LEDGeometry {
 
-SignalTransmissionEffect::SignalTransmissionEffect(int period, int fade_delta)
-    : DynamicEffect(period), pos(0), fade_delta(fade_delta) {}
+SignalTransmissionEffect::SignalTransmissionEffect(int period,
+                                                   int min_hue_delta,
+                                                   int max_hue_delta,
+                                                   int fade_delta)
+    : DynamicEffect(period, min_hue_delta, max_hue_delta),
+      fade_delta(fade_delta),
+      pos(0) {}
 
 SignalTransmissionEffect::SignalTransmissionEffect(int period)
-    : SignalTransmissionEffect(period, 8) {}
+    : SignalTransmissionEffect(period, 32, 224, 8) {}
 
 void SignalTransmissionEffect::next_state() {
     DynamicEffect::next_state();
     ++pos;
 }
 
-void SignalTransmissionEffect::set_colors(LEDInterface* ledCurve) {
+void SignalTransmissionEffect::set_colors(LEDCurve* ledCurve) {
     for (int i = 0; i < ledCurve->n_points(); i++) {
         ledCurve->leds()[i].fadeLightBy(fade_delta);
     }
