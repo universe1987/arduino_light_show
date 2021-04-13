@@ -5,12 +5,7 @@
 
 namespace LEDGeometry {
 
-UniformDynamicEffect::UniformDynamicEffect(int period, int min_hue_delta,
-                                           int max_hue_delta)
-    : DynamicEffect(period, min_hue_delta, max_hue_delta) {}
-
-UniformDynamicEffect::UniformDynamicEffect(int period)
-    : DynamicEffect(period, 32, 224) {}
+UniformDynamicEffect::UniformDynamicEffect(int cycle) : DynamicEffect(cycle) {}
 
 void UniformDynamicEffect::set_colors(LEDCurve* ledCurve) {
     CRGB color = get_current_color();

@@ -7,16 +7,12 @@
 
 namespace LEDGeometry {
 
-PulseEffect::PulseEffect(int period, int min_hue_delta, int max_hue_delta)
-    : DynamicEffect(period, min_hue_delta, max_hue_delta), clock(0) {}
-
-PulseEffect::PulseEffect(int period) : PulseEffect(period, 32, 224) {}
+PulseEffect::PulseEffect(int cycle) : DynamicEffect(cycle), clock(0) {}
 
 int PulseEffect::get_brightness() const {
     int input_signal = 0;
     int output_signal;
     // 1 slow pulse followed by 2 fast pulses
-    // TODO: adjust the frequency based on the period
     if (clock < 32) {
         if (clock >= 8 && clock <= 24) {
             input_signal = (clock - 8) * 16;

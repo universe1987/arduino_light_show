@@ -4,31 +4,26 @@
 
 namespace LEDGeometry {
 
-DynamicEffect::DynamicEffect(int period, int min_hue_delta, int max_hue_delta)
-    : period(period),
-      min_hue_delta(min_hue_delta),
-      max_hue_delta(max_hue_delta),
-      progress(0) {
-    hue = random8();
-    previous_color = bright_color(hue);
-    current_color = previous_color;
-    hue = next_hue();
-    next_color = bright_color(hue);
+DynamicEffect::DynamicEffect(int cycle) : cycle(cycle), progress(0) {
+    start_color = next_color();
+    end_color = next_color();
+    current_color = start_color;
 }
 
-int DynamicEffect::next_hue() const {
-    return (hue + random8(min_hue_delta, max_hue_delta)) % 256;
+int DynamicEffect::next_color() const {
+    CRGB color;
+    color.setHue(random8());
+    return color;
 }
 
 void DynamicEffect::next_state() {
     ++progress;
-    if (progress == period) {
+    if (progress == cycle) {
         progress = 0;
-        previous_color = next_color;
-        hue = next_hue();
-        next_color = bright_color(hue);
+        start_color = end_color;
+        end_color = next_color();
     }
-    float weight = (float)progress / period;
-    current_color = interpolate(previous_color, next_color, weight);
+    uint8_t frac = (uint8_t)(256 * progress / cycle);
+    current_color = start_color.lerp8(end_color, frac);
 }
 }  // namespace LEDGeometry

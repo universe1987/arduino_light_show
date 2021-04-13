@@ -5,16 +5,11 @@
 
 namespace LEDGeometry {
 
-SignalTransmissionEffect::SignalTransmissionEffect(int period,
-                                                   int min_hue_delta,
-                                                   int max_hue_delta,
-                                                   int fade_delta)
-    : DynamicEffect(period, min_hue_delta, max_hue_delta),
-      fade_delta(fade_delta),
-      pos(0) {}
+SignalTransmissionEffect::SignalTransmissionEffect(int cycle, int fade_factor)
+    : DynamicEffect(cycle), fade_factor(fade_factor), pos(0) {}
 
-SignalTransmissionEffect::SignalTransmissionEffect(int period)
-    : SignalTransmissionEffect(period, 32, 224, 8) {}
+SignalTransmissionEffect::SignalTransmissionEffect(int cycle)
+    : SignalTransmissionEffect(cycle, 8) {}
 
 void SignalTransmissionEffect::next_state() {
     DynamicEffect::next_state();
@@ -22,9 +17,13 @@ void SignalTransmissionEffect::next_state() {
 }
 
 void SignalTransmissionEffect::set_colors(LEDCurve* ledCurve) {
-    for (int i = 0; i < ledCurve->n_points(); i++) {
-        ledCurve->leds()[i].fadeLightBy(fade_delta);
+    int n_points = ledCurve->n_points();
+    for (int i = 0; i < n_points; i++) {
+        ledCurve->leds()[i].fadeLightBy(fade_factor);
     }
-    ledCurve->leds()[pos % ledCurve->n_points()] = get_current_color();
+    if (pos >= n_points) {
+        pos = 0;
+    }
+    ledCurve->leds()[pos] = get_current_color();
 }
 }  // namespace LEDGeometry

@@ -5,32 +5,30 @@
 
 namespace LEDGeometry {
 
-BurstEffect::BurstEffect(int period, int min_hue_delta, int max_hue_delta,
-                         float min_radius, float max_radius, int resolution,
-                         int wave_period)
-    : DynamicEffect(period, min_hue_delta, max_hue_delta),
+BurstEffect::BurstEffect(int cycle, float min_radius, float max_radius,
+                         int resolution, int frequency)
+    : DynamicEffect(cycle),
       min_radius(min_radius),
       max_radius(max_radius),
       resolution(resolution),
-      wave_period(wave_period) {
+      frequency(frequency) {
     spectrum = new CRGB[resolution];
     for (int i = 0; i < resolution; i++) {
         spectrum[i] = CRGB::Black;
     }
 }
 
-BurstEffect::BurstEffect(int period)
-    : BurstEffect(period, 32, 224, 0.0, 1.0, 100, 32) {}
+BurstEffect::BurstEffect(int cycle) : BurstEffect(cycle, 0.0, 1.0, 100, 32) {}
 
 BurstEffect::~BurstEffect() { delete[] spectrum; }
 
 void BurstEffect::next_state() {
     DynamicEffect::next_state();
-    for (int i = 1; i < resolution; i++) {
-        spectrum[i] = spectrum[i-1];
+    for (int i = resolution - 1; i > 0; i--) {
+        spectrum[i] = spectrum[i - 1];
     }
     spectrum[0] = get_current_color();
-    spectrum[0].fadeLightBy(quadwave8(wave_period * get_progress()));
+    spectrum[0].fadeLightBy(quadwave8(frequency * get_progress()));
 }
 
 void BurstEffect::set_color(LEDCurve *ledCurve) {
