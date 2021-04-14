@@ -1,7 +1,6 @@
 #include "UniformDynamicEffect.h"
 
 #include "LEDCurve.h"
-#include "utils.h"
 
 namespace LEDGeometry {
 

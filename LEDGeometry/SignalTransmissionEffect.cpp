@@ -1,7 +1,6 @@
 #include "SignalTransmissionEffect.h"
 
 #include "LEDCurve.h"
-#include "utils.h"
 
 namespace LEDGeometry {
 

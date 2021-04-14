@@ -1,7 +1,8 @@
 #include "BurstEffect.h"
 
+#include <math.h>
+
 #include "LEDCurve.h"
-#include "utils.h"
 
 namespace LEDGeometry {
 
@@ -32,10 +33,10 @@ void BurstEffect::next_state() {
 }
 
 void BurstEffect::set_color(LEDCurve *ledCurve) {
-    int width = max_radius - min_radius;
+    float scale = (resolution - 1) / (max_radius - min_radius);
     for (int i = 0; i < ledCurve->n_points(); i++) {
         float r = ledCurve->r(i);
-        int projection = (int)((resolution - 1) * (r - min_radius) / width);
+        int projection = (int)round((r - min_radius) * scale);
         ledCurve->leds()[i] = spectrum[projection];
     }
 }

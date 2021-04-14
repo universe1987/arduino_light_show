@@ -1,7 +1,5 @@
 #include "DynamicEffect.h"
 
-#include "utils.h"
-
 namespace LEDGeometry {
 
 DynamicEffect::DynamicEffect(int cycle) : cycle(cycle), progress(0) {

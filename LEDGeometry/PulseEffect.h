@@ -9,11 +9,10 @@ class LEDCurve;
 class PulseEffect : public DynamicEffect {
    public:
     PulseEffect(int cycle);
+    PulseEffect(int cycle, int beats_per_minute);
 
    private:
-    int clock;
-    int get_brightness() const;
+    int beats_per_minute;
     void set_colors(LEDCurve* ledCurve);
-    void next_state();
 };
 }  // namespace LEDGeometry
