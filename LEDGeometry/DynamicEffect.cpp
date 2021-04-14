@@ -8,7 +8,7 @@ DynamicEffect::DynamicEffect(int cycle) : cycle(cycle), progress(0) {
     current_color = start_color;
 }
 
-int DynamicEffect::next_color() const {
+CRGB DynamicEffect::next_color() const {
     CRGB color;
     color.setHue(random8());
     return color;
@@ -22,6 +22,6 @@ void DynamicEffect::next_state() {
         end_color = next_color();
     }
     uint8_t frac = (uint8_t)(256 * progress / cycle);
-    current_color = start_color.lerp8(end_color, frac);
+    current_color = blend(start_color, end_color, frac);
 }
 }  // namespace LEDGeometry

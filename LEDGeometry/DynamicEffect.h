@@ -24,7 +24,7 @@ class DynamicEffect : public LightEffect {
     int get_progress() const { return progress; }
 
    protected:
-    virtual int next_color() const;
+    virtual CRGB next_color() const;
     virtual void next_state();
 
    private:
