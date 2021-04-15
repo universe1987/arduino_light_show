@@ -19,7 +19,7 @@ BurstEffect::BurstEffect(int cycle, float min_radius, float max_radius,
     }
 }
 
-BurstEffect::BurstEffect(int cycle) : BurstEffect(cycle, 0.0, 1.0, 100, 32) {}
+BurstEffect::BurstEffect(int cycle) : BurstEffect(cycle, 0.0, 1.0, 64, 32) {}
 
 BurstEffect::~BurstEffect() { delete[] spectrum; }
 

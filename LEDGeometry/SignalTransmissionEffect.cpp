@@ -8,7 +8,7 @@ SignalTransmissionEffect::SignalTransmissionEffect(int cycle, int fade_factor)
     : DynamicEffect(cycle), fade_factor(fade_factor), pos(0) {}
 
 SignalTransmissionEffect::SignalTransmissionEffect(int cycle)
-    : SignalTransmissionEffect(cycle, 8) {}
+    : SignalTransmissionEffect(cycle, 16) {}
 
 void SignalTransmissionEffect::next_state() {
     DynamicEffect::next_state();

@@ -10,7 +10,7 @@ class UniformDynamicEffect : public DynamicEffect {
    public:
     UniformDynamicEffect(int cycle);
 
-   private:
+   protected:
     void set_colors(LEDCurve* ledCurve);
 };
 }  // namespace LEDGeometry

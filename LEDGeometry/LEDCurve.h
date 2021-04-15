@@ -10,7 +10,8 @@ class LEDCurve {
     LEDCurve(CRGB* leds, Shape* shape, bool folded)
         : leds_(leds), shape_(shape), folded(folded){};
     ~LEDCurve() {
-        delete[] leds_;
+        // not free the array, LEDCurve does not own it
+        delete leds_;
         delete shape_;
     }
     // array of the LED colors

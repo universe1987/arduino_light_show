@@ -18,13 +18,16 @@ class DynamicEffect : public LightEffect {
      * @param cycle Number of frames to completely change to the next color.
      */
     DynamicEffect(int cycle);
-    // current color of the frame
+    // Color for the current frame.
     const CRGB& get_current_color() const { return current_color; }
-    // progress with respect to the cycle
+    // Progress with respect to the cycle.
     int get_progress() const { return progress; }
 
    protected:
+    // Change to the next color at the end of a cycle.
     virtual CRGB next_color() const;
+    // Increment progress after each frame and update current_color, derived
+    // classes need to call this function if override it.
     virtual void next_state();
 
    private:

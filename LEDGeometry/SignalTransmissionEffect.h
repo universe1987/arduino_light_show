@@ -11,10 +11,12 @@ class SignalTransmissionEffect : public DynamicEffect {
     SignalTransmissionEffect(int cycle);
     SignalTransmissionEffect(int cycle, int fade_factor);
 
+   protected:
+    void next_state();
+    void set_colors(LEDCurve* ledCurve);
+
    private:
     int fade_factor;
     int pos;
-    void next_state();
-    void set_colors(LEDCurve* ledCurve);
 };
 }  // namespace LEDGeometry

@@ -9,9 +9,7 @@ DynamicEffect::DynamicEffect(int cycle) : cycle(cycle), progress(0) {
 }
 
 CRGB DynamicEffect::next_color() const {
-    CRGB color;
-    color.setHue(random8());
-    return color;
+    return CRGB().setHue(random8());
 }
 
 void DynamicEffect::next_state() {

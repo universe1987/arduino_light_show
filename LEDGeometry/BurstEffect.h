@@ -13,15 +13,15 @@ class BurstEffect : public DynamicEffect {
                 int frequency);
     ~BurstEffect();
 
+   protected:
+    void next_state();
+    void set_color(LEDCurve* ledCurve);
+
    private:
     float min_radius;
     float max_radius;
     int resolution;
     int frequency;
     CRGB* spectrum;
-
-    int next_hue() const;
-    void next_state();
-    void set_color(LEDCurve* ledCurve);
 };
 }  // namespace LEDGeometry
