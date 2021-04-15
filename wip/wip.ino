@@ -11,7 +11,7 @@
 #define COLOR_ORDER GRB
 #define CHIPSET     WS2812B
 #define NUM_LEDS    120
-#define BRIGHTNESS  160
+#define BRIGHTNESS  144
 
 using namespace LEDGeometry;
 
@@ -33,10 +33,10 @@ void loop() {
   // 10 fps for 30 seconds
   my_light.set_effect(effect1, 30, 10);
   delete effect1;
-  LightEffect* effect2 = new SignalTransmissionEffect(150);
-  my_light.set_effect(effect2, 30, 15);
+  LightEffect* effect2 = new SignalTransmissionEffect(100, 24);
+  my_light.set_effect(effect2, 30, 20);
   delete effect2;
-  LightEffect* effect3 = new PulseEffect(160);
+  LightEffect* effect3 = new PulseEffect(160, 30);
   my_light.set_effect(effect3, 30, 16);
   delete effect3;
 }
