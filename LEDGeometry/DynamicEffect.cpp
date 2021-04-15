@@ -19,7 +19,7 @@ void DynamicEffect::next_state() {
         start_color = end_color;
         end_color = next_color();
     }
-    uint8_t frac = (uint8_t)(256 * progress / cycle);
+    uint8_t frac = (uint8_t)(255 * progress / cycle);
     current_color = blend(start_color, end_color, frac);
 }
 }  // namespace LEDGeometry
