@@ -12,8 +12,7 @@ class SignalTransmissionEffect : public DynamicEffect {
     SignalTransmissionEffect(int cycle, int fade_factor);
 
    protected:
-    void next_state();
-    void set_colors(LEDCurve* ledCurve);
+    void set_colors(LEDCurve* led_curve);
 
    private:
     int fade_factor;

@@ -15,7 +15,7 @@ class BurstEffect : public DynamicEffect {
 
    protected:
     void next_state();
-    void set_color(LEDCurve* ledCurve);
+    void set_color(LEDCurve* led_curve);
 
    private:
     float min_radius;

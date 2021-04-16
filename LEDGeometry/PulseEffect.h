@@ -12,7 +12,7 @@ class PulseEffect : public DynamicEffect {
     PulseEffect(int cycle, int beats_per_minute);
 
    protected:
-    void set_colors(LEDCurve* ledCurve);
+    void set_colors(LEDCurve* led_curve);
 
    private:
     int beats_per_minute;

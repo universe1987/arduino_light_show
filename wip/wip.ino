@@ -3,6 +3,8 @@
 #include "UniformDynamicEffect.h"
 #include "SignalTransmissionEffect.h"
 #include "PulseEffect.h"
+#include "SpiralEffect.h"
+
 
 #include <math.h>
 #include <FastLED.h>
@@ -39,4 +41,8 @@ void loop() {
   LightEffect* effect3 = new PulseEffect(160, 30);
   my_light.set_effect(effect3, 30, 16);
   delete effect3;
+  // 2 segments, 30 points per segment
+  LightEffect* effect4 = new SpiralEffect(30, 2);
+  my_light.set_effect(effect4, 30, 15);
+  delete effect4;
 }

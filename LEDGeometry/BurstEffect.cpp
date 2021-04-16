@@ -32,12 +32,12 @@ void BurstEffect::next_state() {
     spectrum[0].fadeLightBy(quadwave8(frequency * get_progress()));
 }
 
-void BurstEffect::set_color(LEDCurve *ledCurve) {
+void BurstEffect::set_color(LEDCurve *led_curve) {
     float scale = (resolution - 1) / (max_radius - min_radius);
-    for (int i = 0; i < ledCurve->n_points(); i++) {
-        float r = ledCurve->r(i);
+    for (int i = 0; i < led_curve->n_points(); i++) {
+        float r = led_curve->r(i);
         int projection = (int)round((r - min_radius) * scale);
-        ledCurve->leds()[i] = spectrum[projection];
+        led_curve->leds()[i] = spectrum[projection];
     }
 }
 }  // namespace LEDGeometry
