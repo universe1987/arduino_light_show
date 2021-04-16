@@ -1,5 +1,7 @@
 #include "SpiralEffect.h"
 
+#include "LEDCurve.h"
+
 namespace LEDGeometry {
 SpiralEffect::SpiralEffect(int cycle, int n_segments)
     : pos(0), cycle(cycle), n_segments(n_segments) {
@@ -14,9 +16,9 @@ void SpiralEffect::next_state() {
     }
 }
 
-void SpiralEffect::set_color(LEDCurve* led_curve) {
+void SpiralEffect::set_colors(LEDCurve* led_curve) {
     for (int i = 0; i < n_segments; i++) {
-        led_curve->leds()[pos + i * cycle] = color;
+        led_curve->leds()[pos + i * cycle] = current_color;
     }
 }
 }  // namespace LEDGeometry

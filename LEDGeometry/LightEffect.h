@@ -7,7 +7,7 @@ class LightEffect {
     virtual ~LightEffect() {}
 
     void update_leds(LEDCurve* led_curve) {
-        set_colors(ledCurve);
+        set_colors(led_curve);
         next_state();
     };
 
