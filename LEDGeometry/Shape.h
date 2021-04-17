@@ -3,7 +3,7 @@
 namespace LEDGeometry {
 class Shape {
    public:
-    Shape(int n_points) : n_points_(n_points){};
+    Shape(int num_points) : n_points_(num_points){};
     virtual ~Shape() {}
     // x coordinate, -1 <= x <= 1
     virtual float x(int i) const = 0;

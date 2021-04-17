@@ -26,11 +26,65 @@ def locate_centers(src_path, n_lights):
     centers -= centers.mean(axis=0)
     max_r = np.sqrt(centers[:, 0] ** 2 + centers[:, 1] ** 2).max()
     centers /= max_r
-    print(centers.min(), centers.max())
+    centers *= 0.95
     return centers
 
 
-if __name__ == '__main__':
+def connect_the_dots(centers, start, is_left_half):
+    result = [start]
+    for i in range(len(centers) // 2 - 1):
+        cx, cy = result[-1]
+        neighbor = None
+        min_dist = 1
+        chosen = set(result)
+        for x, y in centers:
+            if is_left_half and x > 0.02:
+                continue
+            if not is_left_half and x < -0.02:
+                continue
+            if (x, y) in chosen:
+                continue
+            dist = (x - cx) ** 2 + (y - cy) ** 2
+            if min_dist > dist:
+                min_dist = dist
+                neighbor = x, y
+        result.append(neighbor)
+    return result
+
+
+def sort_centers(centers, render=False):
+    left_start, right_start = None, None
+    for x, y in centers:
+        if -0.05 < x < 0 and y > 0.5:
+            left_start = x, y
+        if 0 < x < 0.05 and y > 0.5:
+            right_start = x, y
+    left_half = connect_the_dots(centers, left_start, True)
+    right_half = connect_the_dots(centers, right_start, False)
+    result = left_half + right_half[::-1]
+    x_coords = [a[0] for a in result]
+    y_coords = [a[1] for a in result]
+
+    if render:
+        import matplotlib.pyplot as plt
+
+        plt.plot(x_coords, y_coords)
+        plt.show()
+
+    return x_coords, y_coords
+
+
+def parametrize_leds():
     # highlight_marks('imgs/gray.jpg', 'imgs/marks.jpg')
-    c = list(list(x) for x in locate_centers('imgs/marks.jpg', 60))
-    print(sorted(c))
+    centers = list(list(x) for x in locate_centers('imgs/marks.jpg', 60))
+    x_coords, y_coords = sort_centers(centers, True)
+    x_coords = [int(round(x * 10000)) for x in x_coords]
+    y_coords = [int(round(y * 10000)) for y in y_coords]
+    s = str(x_coords).replace('[', '{').replace(']', '}')
+    print('int16_t x_coords[60] = {};'.format(s))
+    s = str(y_coords).replace('[', '{').replace(']', '}')
+    print('int16_t y_coords[60] = {};'.format(s))
+
+
+if __name__ == '__main__':
+    parametrize_leds()
