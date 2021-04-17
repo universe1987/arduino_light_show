@@ -8,15 +8,20 @@ def convert_to_grayscale(src_path, dst_path):
     cv2.imwrite(dst_path, img)
 
 
-def highlight_marks(src_path, dst_path):
-    img = cv2.imread(src_path)
+def extract_marks(src_path, dst_path):
+    """
+    Assuming the marks are green and the background is gray, so the green channel stands out.
+    """
+    img = cv2.imread(src_path).astype(int)
     img_diff = img[:, :, 1] - img[:, :, 0]
-    img_diff[img_diff > 200] = 0
     img_diff[img_diff > 32] = 255
     cv2.imwrite(dst_path, img_diff)
 
 
 def locate_centers(src_path, n_lights):
+    """
+    Identify the center of the white dots from a black and white image using k-means.
+    """
     img = cv2.imread(src_path, 0)
     y, x = np.where(img == 255)
     y = y.astype(float) / img.shape[0]
@@ -25,12 +30,17 @@ def locate_centers(src_path, n_lights):
     centers = km.cluster_centers_
     centers -= centers.mean(axis=0)
     max_r = np.sqrt(centers[:, 0] ** 2 + centers[:, 1] ** 2).max()
+    # scale and shrink to fit in unit circle
     centers /= max_r
     centers *= 0.95
     return centers
 
 
 def connect_the_dots(centers, start, is_left_half):
+    """
+    Map the index to coordinates, this assumes that the curve is symmetric to y-axis, and for each half of the curve,
+    two dots are closest if and only if they are adjacent.
+    """
     result = [start]
     for i in range(len(centers) // 2 - 1):
         cx, cy = result[-1]
@@ -75,7 +85,6 @@ def sort_centers(centers, render=False):
 
 
 def parametrize_leds():
-    # highlight_marks('imgs/gray.jpg', 'imgs/marks.jpg')
     centers = list(list(x) for x in locate_centers('imgs/marks.jpg', 60))
     x_coords, y_coords = sort_centers(centers, True)
     x_coords = [int(round(x * 10000)) for x in x_coords]
@@ -87,4 +96,11 @@ def parametrize_leds():
 
 
 if __name__ == '__main__':
+    # Step 0. take a photo of your light when the lights are on and save it to 'imgs/blue_heart.jpg'
+    # Step 1. uncomment and run the following line to convert the photo to grayscale
+    # convert_to_grayscale('imgs/blue_heart.jpg', 'imgs/gray.jpg')
+    # Step 2. after manually mark the LEDs with green dots, for example, using Windows' paint, uncomment and run
+    # the following line to extract your marks into a black and white image
+    # extract_marks('imgs/gray.jpg', 'imgs/marks.jpg')
+    # Step 3. run the following command and paste the output to the Arduino IDE.
     parametrize_leds()
