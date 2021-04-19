@@ -1,18 +1,16 @@
 #pragma once
-#include <FastLED.h>
-
-#include "DynamicEffect.h"
+#include "LightEffect.h"
 
 namespace LEDGeometry {
 class LEDCurve;
 
-class PulseEffect : public DynamicEffect {
+class PulseEffect : public LightEffect {
    public:
-    PulseEffect(int cycle);
-    PulseEffect(int cycle, int beats_per_minute);
+    PulseEffect();
+    PulseEffect(int beats_per_minute);
 
    protected:
-    void set_colors(LEDCurve* led_curve);
+    void update(LEDCurve* led_curve);
 
    private:
     int beats_per_minute;

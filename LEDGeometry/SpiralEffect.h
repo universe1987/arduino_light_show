@@ -1,22 +1,18 @@
 #pragma once
-#include <FastLED.h>
-
 #include "LightEffect.h"
+
 namespace LEDGeometry {
 class LEDCurve;
-
 class SpiralEffect : public LightEffect {
    public:
-    SpiralEffect(int cycle, int n_segments);
+    SpiralEffect(int n_segments, int segment_length);
 
    protected:
-    void next_state();
-    void set_colors(LEDCurve* led_curve);
+    void update(LEDCurve* led_curve);
 
    private:
-    int pos;
-    int cycle;
     int n_segments;
-    CRGB current_color;
+    int segment_length;
+    int pos;
 };
 }  // namespace LEDGeometry

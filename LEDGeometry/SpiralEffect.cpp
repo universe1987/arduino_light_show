@@ -1,24 +1,21 @@
 #include "SpiralEffect.h"
 
+#include <FastLED.h>
+
 #include "LEDCurve.h"
 
 namespace LEDGeometry {
-SpiralEffect::SpiralEffect(int cycle, int n_segments)
-    : pos(0), cycle(cycle), n_segments(n_segments) {
-    current_color.setHue(random8());
-}
+SpiralEffect::SpiralEffect(int n_segments, int segment_length)
+    : pos(0), n_segments(n_segments), segment_length(segment_length) {}
 
-void SpiralEffect::next_state() {
-    ++pos;
-    if (pos == cycle) {
-        pos = 0;
-        current_color.setHue(random8());
-    }
-}
-
-void SpiralEffect::set_colors(LEDCurve* led_curve) {
+void SpiralEffect::update(LEDCurve* led_curve) {
+    CRGB color = led_curve->next_color();
     for (int i = 0; i < n_segments; i++) {
-        led_curve->leds()[pos + i * cycle] = current_color;
+        led_curve->led(pos + i * segment_length) = color;
+    }
+    ++pos;
+    if (pos >= segment_length) {
+        pos = 0;
     }
 }
 }  // namespace LEDGeometry

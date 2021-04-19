@@ -1,21 +1,20 @@
 #pragma once
 #include <FastLED.h>
 
-#include "DynamicEffect.h"
+#include "LightEffect.h"
 
 namespace LEDGeometry {
 class LEDCurve;
 
-class BurstEffect : public DynamicEffect {
+class BurstEffect : public LightEffect {
    public:
-    BurstEffect(int cycle);
-    BurstEffect(int cycle, float min_radius, float max_radius, int resolution,
+    BurstEffect();
+    BurstEffect(float min_radius, float max_radius, int resolution,
                 int frequency);
     ~BurstEffect();
 
    protected:
-    void next_state();
-    void set_color(LEDCurve* led_curve);
+    void update(LEDCurve* led_curve);
 
    private:
     float min_radius;

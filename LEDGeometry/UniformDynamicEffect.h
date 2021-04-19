@@ -1,16 +1,11 @@
 #pragma once
-#include <FastLED.h>
-
-#include "DynamicEffect.h"
+#include "LightEffect.h"
 
 namespace LEDGeometry {
 class LEDCurve;
 
-class UniformDynamicEffect : public DynamicEffect {
-   public:
-    UniformDynamicEffect(int cycle);
-
+class UniformDynamicEffect : public LightEffect {
    protected:
-    void set_colors(LEDCurve* led_curve);
+    void update(LEDCurve* led_curve);
 };
 }  // namespace LEDGeometry
