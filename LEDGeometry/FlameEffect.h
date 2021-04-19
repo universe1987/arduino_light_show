@@ -1,5 +1,5 @@
 #pragma once
-#include <FastLED.h>
+#include <stdint.h>
 
 #include "LightEffect.h"
 

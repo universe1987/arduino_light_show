@@ -4,6 +4,7 @@
 
 #include "ColorScheduler.h"
 #include "LEDCurve.h"
+#include "Shape.h"
 
 namespace LEDGeometry {
 SignalTransmissionEffect::SignalTransmissionEffect(int fade_factor)
@@ -13,14 +14,14 @@ SignalTransmissionEffect::SignalTransmissionEffect()
     : SignalTransmissionEffect(16) {}
 
 void SignalTransmissionEffect::update(LEDCurve* led_curve) {
-    int n_points = led_curve->n_points();
+    int n_points = led_curve->shape->n_points();
     for (int i = 0; i < n_points; i++) {
-        led_curve->led(i).fadeLightBy(fade_factor);
+        led_curve->leds[i].fadeLightBy(fade_factor);
     }
     ++pos;
     if (pos >= n_points) {
         pos = 0;
     }
-    led_curve->led(pos) = led_curve->next_color();
+    led_curve->leds[pos] = led_curve->color_scheduler->next_color();
 }
 }  // namespace LEDGeometry

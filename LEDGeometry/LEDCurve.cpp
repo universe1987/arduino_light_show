@@ -18,13 +18,14 @@ LEDCurve::~LEDCurve() {
     // not free the array, LEDCurve does not own it
     delete leds;
     delete shape;
+    delete color_scheduler;
 }
 
 void LEDCurve::display(int sleep_ms) {
     if (folded) {
-        int n = n_points();
+        int n = shape->n_points();
         for (int i = 0; i < n; i++) {
-            led(n + i) = led(n - i - 1);
+            leds[n + i] = leds[n - i - 1];
         }
     }
     FastLED.show();
@@ -38,23 +39,5 @@ void LEDCurve::set_effect(LightEffect* effect, int n_seconds, int fps) {
         effect->update(this);
         display(sleep_ms);
     }
-}
-
-int LEDCurve::n_points() const { return shape->n_points(); };
-
-float LEDCurve::x(int i) const { return shape->x(i); }
-
-float LEDCurve::y(int i) const { return shape->y(i); }
-
-float LEDCurve::r(int i) const { return shape->r(i); }
-
-CRGB LEDCurve::next_color() { return color_scheduler->next_color(); }
-
-void LEDCurve::set_cycle(int new_cycle) {
-    color_scheduler->set_cycle(new_cycle);
-}
-
-uint8_t LEDCurve::get_progress() const {
-    return color_scheduler->get_progress();
 }
 }  // namespace LEDGeometry

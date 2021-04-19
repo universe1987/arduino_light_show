@@ -2,7 +2,9 @@
 
 #include <math.h>
 
+#include "ColorScheduler.h"
 #include "LEDCurve.h"
+#include "Shape.h"
 
 namespace LEDGeometry {
 
@@ -26,13 +28,14 @@ void BurstEffect::update(LEDCurve* led_curve) {
     for (int i = resolution - 1; i > 0; i--) {
         spectrum[i] = spectrum[i - 1];
     }
-    spectrum[0] = led_curve->next_color();
-    spectrum[0].fadeLightBy(quadwave8(frequency * led_curve->get_progress()));
+    spectrum[0] = led_curve->color_scheduler->next_color();
+    spectrum[0].fadeLightBy(
+        quadwave8(frequency * led_curve->color_scheduler->get_progress()));
     float scale = (resolution - 1) / (max_radius - min_radius);
-    for (int i = 0; i < led_curve->n_points(); i++) {
-        float r = led_curve->r(i);
+    for (int i = 0; i < led_curve->shape->n_points(); i++) {
+        float r = led_curve->shape->r(i);
         int projection = (int)round((r - min_radius) * scale);
-        led_curve->led(i) = spectrum[projection];
+        led_curve->leds[i] = spectrum[projection];
     }
 }
 }  // namespace LEDGeometry

@@ -1,6 +1,10 @@
 #include "FlameEffect.h"
 
+#include <FastLED.h>
+
+#include "ColorScheduler.h"
 #include "LEDCurve.h"
+#include "Shape.h"
 
 namespace LEDGeometry {
 FlameEffect::FlameEffect(int cooling, int sparking, int resolution, int min_y,
@@ -20,8 +24,8 @@ FlameEffect::~FlameEffect() { delete[] heat; }
 
 void FlameEffect::update(LEDCurve* led_curve) {
     float scale = (resolution - 1) / (max_y - min_y);
-    for (int i = 0; i < led_curve->n_points(); i++) {
-        float y = led_curve->y(i);
+    for (int i = 0; i < led_curve->shape->n_points(); i++) {
+        float y = led_curve->shape->y(i);
         int projection = (int)round((y - min_y) * scale);
         uint8_t temperature = heat[projection];
         int delta = random8(0, 32) - 16;
@@ -31,7 +35,7 @@ void FlameEffect::update(LEDCurve* led_curve) {
             temperature = qsub8(temperature, -delta);
         }
         uint8_t color_index = scale8(temperature, 240);
-        led_curve->led(i) = ColorFromPalette(HeatColors_p, color_index);
+        led_curve->leds[i] = ColorFromPalette(HeatColors_p, color_index);
     }
     update_heat();
 }

@@ -1,8 +1,7 @@
 #pragma once
-#include <FastLED.h>
-
 #include "LightEffect.h"
 
+class CRGB;
 namespace LEDGeometry {
 class LEDCurve;
 
