@@ -32,12 +32,20 @@ void LEDCurve::display(int sleep_ms) {
     FastLED.delay(sleep_ms);
 }
 
-void LEDCurve::set_effect(LightEffect* effect, int n_seconds, int fps) {
+void LEDCurve::set_effect(LightEffect* effect, int n_seconds, int fps,
+                          bool delete_after_use) {
     int sleep_ms = 1000 / fps;
     int n_iters = n_seconds * fps;
     for (int i = 0; i < n_iters; i++) {
         effect->update(this);
         display(sleep_ms);
     }
+    if (delete_after_use) {
+        delete effect;
+    }
+}
+
+void LEDCurve::set_effect(LightEffect* effect, int n_seconds, int fps) {
+    set_effect(effect, n_seconds, fps, true);
 }
 }  // namespace LEDGeometry

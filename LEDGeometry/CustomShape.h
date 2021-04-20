@@ -2,6 +2,11 @@
 #include "Shape.h"
 
 namespace LEDGeometry {
+/**
+ * Constructs a shape using coordinates.
+ * CustomShape does not own the coordinates, so make the coordinates global or
+ * keep them on the heap.
+ */
 class CustomShape : public Shape {
    public:
     CustomShape(int num_points) : Shape(num_points) {}

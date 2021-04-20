@@ -2,23 +2,22 @@
 
 #include <FastLED.h>
 
-#include "ColorScheduler.h"
 #include "LEDCurve.h"
 #include "Shape.h"
 
 namespace LEDGeometry {
-FlameEffect::FlameEffect(int cooling, int sparking, int resolution, int min_y,
-                         int max_y)
-    : cooling(cooling),
-      sparking(sparking),
+FlameEffect::FlameEffect(int cooling, int sparking, int resolution, float min_y,
+                         float max_y)
+    : cooling((uint8_t)cooling),
+      sparking((uint8_t)sparking),
       resolution(resolution),
       min_y(min_y),
       max_y(max_y) {
     uint8_t* heat = new uint8_t[resolution];
 };
 
-FlameEffect::FlameEffect(int resolution, int min_y, int max_y)
-    : FlameEffect(75, 120, resolution, min_y, max_y) {}
+FlameEffect::FlameEffect(int resolution, float min_y, float max_y)
+    : FlameEffect((int)(750 / resolution) + 2, 120, resolution, min_y, max_y) {}
 
 FlameEffect::~FlameEffect() { delete[] heat; }
 
@@ -43,14 +42,14 @@ void FlameEffect::update(LEDCurve* led_curve) {
 void FlameEffect::update_heat() {
     // randomly cool down
     for (int i = 0; i < resolution; i++) {
-        heat[i] = qsub8(heat[i], random8(0, ((cooling * 10) / 63) + 2));
+        heat[i] = qsub8(heat[i], random8(0, cooling));
     }
     // transmit heat up
     for (int i = resolution - 1; i >= 2; i--) {
         // this does not overflow
         heat[i] = (heat[i - 1] + heat[i - 2] + heat[i - 2]) / 3;
     }
-    // random ignite
+    // random ignition
     if (random8() < sparking) {
         int y = random8(7);
         heat[y] = qadd8(heat[y], random8(160, 255));

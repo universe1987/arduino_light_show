@@ -32,7 +32,6 @@ def locate_centers(src_path, n_lights):
     max_r = np.sqrt(centers[:, 0] ** 2 + centers[:, 1] ** 2).max()
     # scale and shrink to fit in unit circle
     centers /= max_r
-    centers *= 0.95
     return centers
 
 

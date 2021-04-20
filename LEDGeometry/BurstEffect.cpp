@@ -1,6 +1,7 @@
 #include "BurstEffect.h"
 
 #include <math.h>
+#include <FastLED.h>
 
 #include "ColorScheduler.h"
 #include "LEDCurve.h"
