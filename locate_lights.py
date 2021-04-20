@@ -64,22 +64,23 @@ def connect_the_dots(centers, start, is_left_half):
 def sort_centers(centers, render=False):
     left_start, right_start = None, None
     for x, y in centers:
-        if -0.05 < x < 0 and y > 0.5:
+        if -0.03 < x < 0 and y < -0.3:
+            print(x, y)
             left_start = x, y
-        if 0 < x < 0.05 and y > 0.5:
+        if 0 < x < 0.07 and y < -0.3:
+            print(x, y)
             right_start = x, y
     left_half = connect_the_dots(centers, left_start, True)
     right_half = connect_the_dots(centers, right_start, False)
     result = left_half + right_half[::-1]
     x_coords = [a[0] for a in result]
-    y_coords = [a[1] for a in result]
+    y_coords = [-a[1] for a in result]
 
     if render:
         import matplotlib.pyplot as plt
-
         plt.plot(x_coords, y_coords)
+        plt.scatter([left_start[0], right_start[0]], [-left_start[1], -right_start[1]])
         plt.show()
-
     return x_coords, y_coords
 
 
