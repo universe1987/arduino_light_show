@@ -8,14 +8,15 @@ ColorScheduler::ColorScheduler(int cycle, uint8_t hue, uint8_t min_hue_delta,
     : cycle(cycle),
       hue(hue),
       min_hue_delta(min_hue_delta),
-      max_hue_delta(max_hue_delta) {
+      max_hue_delta(max_hue_delta),
+      discrete_mode(false) {
     end_color.setHue(hue);
     change_theme();
     current_color = start_color;
 }
 
 ColorScheduler::ColorScheduler(int cycle)
-    : ColorScheduler(cycle, random8(), min_hue_delta, max_hue_delta) {}
+    : ColorScheduler(cycle, random8(), 32, 224) {}
 
 void ColorScheduler::set_cycle(int new_cycle) {
     progress = (int)round(progress * new_cycle / cycle);
@@ -36,8 +37,12 @@ void ColorScheduler::change_theme() {
 }
 
 CRGB ColorScheduler::next_color() {
-    uint8_t frac = (uint8_t)(255 * progress / cycle);
-    current_color = blend(start_color, end_color, frac);
+    if (discrete_mode) {
+        current_color = start_color;
+    } else {
+        uint8_t frac = (uint8_t)(255 * progress / cycle);
+        current_color = blend(start_color, end_color, frac);
+    }
     ++progress;
     if (progress >= cycle) {
         progress = 0;
@@ -45,4 +50,8 @@ CRGB ColorScheduler::next_color() {
     }
     return current_color;
 }
+
+void ColorScheduler::set_discrete_mode() { discrete_mode = true; }
+
+void ColorScheduler::set_continuous_mode() { discrete_mode = false; }
 }  // namespace LEDGeometry

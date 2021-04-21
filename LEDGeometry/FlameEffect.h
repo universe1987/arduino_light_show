@@ -5,7 +5,7 @@
 
 namespace LEDGeometry {
 class LEDCurve;
-typedef int (*projection)(int, float, float);
+typedef int (*projection)(LEDCurve*, int);
 
 // Adapted from Fire2012 by Mark Kriegsman, July 2012, as part of "Five
 // Elements" shown here: http://youtu.be/knWiGsmgycY
