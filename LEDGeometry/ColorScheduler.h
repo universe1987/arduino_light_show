@@ -18,8 +18,6 @@ class ColorScheduler {
     ColorScheduler(int cycle);
     // Returns a color and increment the state.
     CRGB next_color();
-    // Returns theme color, theme color is unchanged within a cycle.
-    CRGB get_theme_color();
     // Set a new cycle and scale the progress accordingly.
     void set_cycle(int new_cycle);
     // Returns the progress with respect to the cycle, scaled to 0 ~ 255.
