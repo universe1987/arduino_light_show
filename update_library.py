@@ -30,4 +30,4 @@ if __name__ == '__main__':
     source_dir = 'LEDGeometry'
     destination_dir = os.path.join('C:\\', 'Users', 'Tong', 'Documents', 'Arduino', 'libraries', 'LEDGeometry')
     copy_library(source_dir, destination_dir)
-    zip_library(source_dir)
+    # zip_library(source_dir)

@@ -46,7 +46,7 @@ SignalTransmissionEffect signal_transmission;
 PulseEffect pulse;
 SpiralEffect spiral(2, 30);
 FlameEffect flame(byte_buffer, BYTE_BUFFER_SIZE, get_intrinsic_level);
-BurstEffect burst(color_buffer, COLOR_BUFFER_SIZE);
+BurstEffect burst(color_buffer, COLOR_BUFFER_SIZE, heart_shape.min_r(), heart_shape.max_r(), 8);
 
 void setup() {
   random16_add_entropy(random());
@@ -63,10 +63,11 @@ void loop() {
   my_light.set_effect((LightEffect*)&signal_transmission, 30, 20);
   color_scheduler.set_cycle(120);
   my_light.set_effect((LightEffect*)&pulse, 30, 16);
-  color_scheduler.set_cycle(30);
+  color_scheduler.set_cycle(200);
   my_light.set_effect((LightEffect*)&burst, 30, 20);
   // Spiral effect looks better under discrete mode
   color_scheduler.set_discrete_mode();
+  color_scheduler.set_cycle(30);
   my_light.set_effect((LightEffect*)&spiral, 30, 15);
   my_light.set_effect((LightEffect*)&flame, 30, 30);
 }

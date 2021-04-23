@@ -19,11 +19,8 @@ ColorScheduler::ColorScheduler(int cycle)
     : ColorScheduler(cycle, random8(), 32, 224) {}
 
 void ColorScheduler::set_cycle(int new_cycle) {
-    progress = (int)round(progress * new_cycle / cycle);
-    if (progress >= new_cycle) {
-        progress = new_cycle - 1;
-    }
     cycle = new_cycle;
+    progress = 0;
 }
 
 uint8_t ColorScheduler::get_progress() const {
