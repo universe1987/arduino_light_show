@@ -14,7 +14,6 @@ class LEDCurve {
     LEDCurve(CRGB* leds, Shape* shape, ColorScheduler* color_scheduler,
              bool folded);
 
-    ~LEDCurve();
     /* set_effect is the only method you need in Arduino IDE. */
     // Pass control to the light effect.
     void set_effect(LightEffect* effect, int n_seconds, int fps);

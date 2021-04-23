@@ -1,7 +1,7 @@
 #include "BurstEffect.h"
 
-#include <math.h>
 #include <FastLED.h>
+#include <math.h>
 
 #include "ColorScheduler.h"
 #include "LEDCurve.h"
@@ -9,21 +9,20 @@
 
 namespace LEDGeometry {
 
-BurstEffect::BurstEffect(float min_radius, float max_radius, int resolution,
-                         int frequency)
-    : min_radius(min_radius),
-      max_radius(max_radius),
+BurstEffect::BurstEffect(CRGB* spectrum, int resolution, float min_radius,
+                         float max_radius, int frequency)
+    : spectrum(spectrum),
       resolution(resolution),
+      min_radius(min_radius),
+      max_radius(max_radius),
       frequency(frequency) {
-    CRGB* spectrum = new CRGB[resolution];
     for (int i = 0; i < resolution; i++) {
         spectrum[i] = CRGB::Black;
     }
 }
 
-BurstEffect::BurstEffect() : BurstEffect(0.0, 1.0, 64, 32) {}
-
-BurstEffect::~BurstEffect() { delete[] spectrum; }
+BurstEffect::BurstEffect(CRGB* spectrum, int resolution)
+    : BurstEffect(spectrum, resolution, 0.0, 1.0, 32) {}
 
 void BurstEffect::update(LEDCurve* led_curve) {
     for (int i = resolution - 1; i > 0; i--) {

@@ -6,19 +6,16 @@
 #include "Shape.h"
 
 namespace LEDGeometry {
-FlameEffect::FlameEffect(int cooling, int sparking, int resolution,
-                         projection p_func)
-    : cooling((uint8_t)cooling),
-      sparking((uint8_t)sparking),
+FlameEffect::FlameEffect(uint8_t* heat, int resolution, projection p_func,
+                         int cooling, int sparking)
+    : heat(heat),
       resolution(resolution),
-      p_func(p_func) {
-    uint8_t* heat = new uint8_t[resolution];
-};
+      p_func(p_func),
+      cooling((uint8_t)cooling),
+      sparking((uint8_t)sparking) {}
 
-FlameEffect::FlameEffect(int resolution, projection p_func)
-    : FlameEffect((int)(550 / resolution) + 2, 120, resolution, p_func) {}
-
-FlameEffect::~FlameEffect() { delete[] heat; }
+FlameEffect::FlameEffect(uint8_t* heat, int resolution, projection p_func)
+    : FlameEffect(heat, resolution, p_func, (int)(550 / resolution) + 2, 120) {}
 
 void FlameEffect::update_heat() {
     // randomly cool down

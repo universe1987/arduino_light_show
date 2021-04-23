@@ -7,19 +7,18 @@ class LEDCurve;
 
 class BurstEffect : public LightEffect {
    public:
-    BurstEffect();
-    BurstEffect(float min_radius, float max_radius, int resolution,
-                int frequency);
-    ~BurstEffect();
+    BurstEffect(CRGB* spectrum, int resolution);
+    BurstEffect(CRGB* spectrum, int resolution, float min_radius,
+                float max_radius, int frequency);
 
    protected:
     void update(LEDCurve* led_curve);
 
    private:
+    CRGB* spectrum;
+    int resolution;
     float min_radius;
     float max_radius;
-    int resolution;
     int frequency;
-    CRGB* spectrum;
 };
 }  // namespace LEDGeometry

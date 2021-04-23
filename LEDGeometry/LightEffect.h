@@ -2,6 +2,8 @@
 
 namespace LEDGeometry {
 class LEDCurve;
+
+// Interface that controls color for each point.
 class LightEffect {
    public:
     virtual ~LightEffect() {}

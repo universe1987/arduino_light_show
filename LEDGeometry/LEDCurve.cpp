@@ -14,13 +14,6 @@ LEDCurve::LEDCurve(CRGB* leds, Shape* shape, ColorScheduler* color_scheduler,
       color_scheduler(color_scheduler),
       folded(folded){};
 
-LEDCurve::~LEDCurve() {
-    // not free the array, LEDCurve does not own it
-    delete leds;
-    delete shape;
-    delete color_scheduler;
-}
-
 void LEDCurve::display(int sleep_ms) {
     if (folded) {
         int n = shape->n_points();

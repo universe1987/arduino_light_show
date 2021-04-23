@@ -4,7 +4,7 @@
 namespace LEDGeometry {
 class LEDCurve;
 
-class UniformDynamicEffect : public LightEffect {
+class MonoColorEffect : public LightEffect {
    protected:
     void update(LEDCurve* led_curve);
 };
