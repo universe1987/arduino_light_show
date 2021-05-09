@@ -23,7 +23,7 @@ float Shape::distance(uint8_t i, float px, float py) const {
 
 float Shape::min_projection(float px, float py) const {
     float proj_min = 100;
-    for (uint8_t i = 0; i < num_points; i++) {
+    for (int i = 0; i < num_points; i++) {
         float p = projection(i, px, py);
         if (p < proj_min) proj_min = p;
     }
@@ -32,7 +32,7 @@ float Shape::min_projection(float px, float py) const {
 
 float Shape::max_projection(float px, float py) const {
     float proj_max = -100;
-    for (uint8_t i = 0; i < num_points; i++) {
+    for (int i = 0; i < num_points; i++) {
         float p = projection(i, px, py);
         if (p > proj_max) proj_max = p;
     }
@@ -42,7 +42,7 @@ float Shape::max_projection(float px, float py) const {
 float Shape::min_distance(float px, float py) const {
     float x_i, y_i;
     float dist_min = 100;
-    for (uint8_t i = 0; i < num_points; i++) {
+    for (int i = 0; i < num_points; i++) {
         float d = (x_i - px) * (x_i - px) + (y_i - py) * (y_i - py);
         if (d < dist_min) dist_min = d;
     }
@@ -52,7 +52,7 @@ float Shape::min_distance(float px, float py) const {
 float Shape::max_distance(float px, float py) const {
     float x_i, y_i;
     float dist_max = 0;
-    for (uint8_t i = 0; i < num_points; i++) {
+    for (int i = 0; i < num_points; i++) {
         float d = (x_i - px) * (x_i - px) + (y_i - py) * (y_i - py);
         if (d > dist_max) dist_max = d;
     }

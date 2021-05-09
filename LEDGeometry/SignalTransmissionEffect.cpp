@@ -15,7 +15,7 @@ SignalTransmissionEffect::SignalTransmissionEffect()
 
 void SignalTransmissionEffect::update(LEDCurve* led_curve) {
     uint8_t n_points = led_curve->shape->n_points();
-    for (uint8_t i = 0; i < n_points; i++) {
+    for (int i = 0; i < n_points; i++) {
         led_curve->leds[i].fadeLightBy(fade_factor);
     }
     ++pos;

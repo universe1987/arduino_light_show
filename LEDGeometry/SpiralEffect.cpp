@@ -11,7 +11,7 @@ SpiralEffect::SpiralEffect(uint8_t n_segments, uint8_t segment_length)
 
 void SpiralEffect::update(LEDCurve* led_curve) {
     CRGB color = led_curve->color_scheduler->next_color();
-    for (uint8_t i = 0; i < n_segments; i++) {
+    for (int i = 0; i < n_segments; i++) {
         led_curve->leds[pos + i * segment_length] = color;
     }
     ++pos;

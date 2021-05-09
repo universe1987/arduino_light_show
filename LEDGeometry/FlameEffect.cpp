@@ -13,7 +13,7 @@ FlameEffect::FlameEffect(uint8_t* heat, uint8_t resolution, uint8_t* projection,
       projection(projection),
       cooling(cooling),
       sparking(sparking) {
-    for (uint8_t i = 0; i < resolution; i++) {
+    for (int i = 0; i < resolution; i++) {
         heat[i] = 0;
     }
 }
@@ -24,11 +24,11 @@ FlameEffect::FlameEffect(uint8_t* heat, uint8_t resolution, uint8_t* projection)
 
 void FlameEffect::update_heat() {
     // randomly cool down
-    for (uint8_t i = 0; i < resolution; i++) {
+    for (int i = 0; i < resolution; i++) {
         heat[i] = qsub8(heat[i], random8(0, cooling));
     }
     // transmit heat up
-    for (uint8_t i = resolution - 1; i >= 2; i--) {
+    for (int i = resolution - 1; i >= 2; i--) {
         // this does not overflow, uint8_t is converted to int before addition
         heat[i] = (heat[i - 1] + heat[i - 2] + heat[i - 2]) / 3;
     }
@@ -40,7 +40,7 @@ void FlameEffect::update_heat() {
 }
 
 void FlameEffect::update(LEDCurve* led_curve) {
-    for (uint8_t i = 0; i < led_curve->shape->n_points(); i++) {
+    for (int i = 0; i < led_curve->shape->n_points(); i++) {
         uint8_t temperature = heat[projection[i]];
         uint8_t color_index = scale8(temperature, 240);
         led_curve->leds[i] = ColorFromPalette(HeatColors_p, color_index);

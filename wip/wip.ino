@@ -55,27 +55,28 @@ void setup() {
 
 void loop() {
   random16_add_entropy(random());
+  int duration = 30;
   // 1. Mono color effect 10fps for 30s.
   color_scheduler.set_cycle(100);
   color_scheduler.set_continuous_mode();
-  my_light.set_effect((LightEffect*)&mono, 10, 30);
+  my_light.set_effect((LightEffect*)&mono, 10, duration);
   // 2. Signal transmission effect 20fps for 30s.
-  my_light.set_effect((LightEffect*)&transmission, 20, 30);
+  my_light.set_effect((LightEffect*)&transmission, 20, duration);
   // 3. Pulse effect 16fps for 30s.
   color_scheduler.set_cycle(120);
-  my_light.set_effect((LightEffect*)&pulse, 16, 30);
+  my_light.set_effect((LightEffect*)&pulse, 16, duration);
   color_scheduler.set_cycle(200);
   // 4. Ripple effect 20fps for 30s, center is randomly chosen.
   radial_projection((Shape*)&heart_shape, byte_buffer, RESOLUTION);
-  my_light.set_effect((LightEffect*)&ripple, 20, 30);
+  my_light.set_effect((LightEffect*)&ripple, 20, duration);
   // 5. Tide effect 20fps for 30s, projection direction is randomly chosen.
   parallel_projection((Shape*)&heart_shape, byte_buffer, RESOLUTION);
-  my_light.set_effect((LightEffect*)&tide, 20, 30);
+  my_light.set_effect((LightEffect*)&tide, 20, duration);
   // 6. Spiral effect 15 fps for 30s, looks better under discrete mode.
   color_scheduler.set_discrete_mode();
   color_scheduler.set_cycle(NUM_LEDS / 4);
-  my_light.set_effect((LightEffect*)&spiral, 15, 30);
+  my_light.set_effect((LightEffect*)&spiral, 15, duration);
   // 7. Flame effect 30 fps for 30s.
   intrinsic_projection((Shape*)&heart_shape, byte_buffer + RESOLUTION, RESOLUTION);
-  my_light.set_effect((LightEffect*)&flame, 30, 30);
+  my_light.set_effect((LightEffect*)&flame, 30, duration);
 }

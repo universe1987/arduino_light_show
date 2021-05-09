@@ -18,7 +18,7 @@ LEDCurve::LEDCurve(CRGB* leds, Shape* shape, ColorScheduler* color_scheduler,
 void LEDCurve::display(int sleep_ms) {
     if (folded) {
         uint8_t n = shape->n_points();
-        for (uint8_t i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             leds[n + i] = leds[n - i - 1];
         }
     }
