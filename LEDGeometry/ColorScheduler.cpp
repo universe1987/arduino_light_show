@@ -3,8 +3,8 @@
 #include <math.h>
 
 namespace LEDGeometry {
-ColorScheduler::ColorScheduler(int cycle, uint8_t hue, uint8_t min_hue_delta,
-                               uint8_t max_hue_delta)
+ColorScheduler::ColorScheduler(uint16_t cycle, uint8_t hue,
+                               uint8_t min_hue_delta, uint8_t max_hue_delta)
     : cycle(cycle),
       hue(hue),
       min_hue_delta(min_hue_delta),
@@ -15,10 +15,10 @@ ColorScheduler::ColorScheduler(int cycle, uint8_t hue, uint8_t min_hue_delta,
     current_color = start_color;
 }
 
-ColorScheduler::ColorScheduler(int cycle)
+ColorScheduler::ColorScheduler(uint16_t cycle)
     : ColorScheduler(cycle, random8(), 32, 224) {}
 
-void ColorScheduler::set_cycle(int new_cycle) {
+void ColorScheduler::set_cycle(uint16_t new_cycle) {
     cycle = new_cycle;
     progress = 0;
 }

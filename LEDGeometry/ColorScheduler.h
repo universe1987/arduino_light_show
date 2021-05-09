@@ -1,5 +1,6 @@
 #pragma once
 #include <FastLED.h>
+#include <stdint.h>
 
 namespace LEDGeometry {
 /**
@@ -13,13 +14,13 @@ namespace LEDGeometry {
  */
 class ColorScheduler {
    public:
-    ColorScheduler(int cycle, uint8_t hue, uint8_t min_hue_delta,
+    ColorScheduler(uint16_t cycle, uint8_t hue, uint8_t min_hue_delta,
                    uint8_t max_hue_delta);
-    ColorScheduler(int cycle);
+    ColorScheduler(uint16_t cycle);
     // Returns a color and increment the state.
     CRGB next_color();
     // Set a new cycle and scale the progress accordingly.
-    void set_cycle(int new_cycle);
+    void set_cycle(uint16_t new_cycle);
     // Returns the progress with respect to the cycle, scaled to 0 ~ 255.
     uint8_t get_progress() const;
 
@@ -31,11 +32,11 @@ class ColorScheduler {
     virtual void change_theme();
 
    private:
-    int cycle;
+    uint16_t cycle;
     uint8_t hue;
     uint8_t min_hue_delta;
     uint8_t max_hue_delta;
-    int progress;
+    uint16_t progress;
     bool discrete_mode;
     CRGB start_color;
     CRGB end_color;

@@ -1,18 +1,20 @@
 #pragma once
+#include <stdint.h>
+
 #include "LightEffect.h"
 
 namespace LEDGeometry {
 class LEDCurve;
 class SpiralEffect : public LightEffect {
    public:
-    SpiralEffect(int n_segments, int segment_length);
+    SpiralEffect(uint8_t n_segments, uint8_t segment_length);
 
    protected:
     void update(LEDCurve* led_curve);
 
    private:
-    int n_segments;
-    int segment_length;
-    int pos;
+    uint8_t n_segments;
+    uint8_t segment_length;
+    uint8_t pos;
 };
 }  // namespace LEDGeometry

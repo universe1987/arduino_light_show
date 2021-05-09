@@ -3,65 +3,59 @@
 #include <math.h>
 
 namespace LEDGeometry {
-int Shape::n_points() const { return num_points; }
+uint8_t Shape::n_points() const { return num_points; }
 
-float Shape::r(int i) const {
+float Shape::r(uint8_t i) const {
     float xx = x(i);
     float yy = y(i);
     return sqrt(xx * xx + yy * yy);
 }
 
-float Shape::min_x() const {
-    float result = 1;
-    for (int i = 0; i < num_points; i++) {
-        float x_i = x(i);
-        if (x_i < result) result = x_i;
-    }
-    return result;
+float Shape::projection(uint8_t i, float px, float py) const {
+    return px * x(i) + py * y(i);
 }
 
-float Shape::max_x() const {
-    float result = -1;
-    for (int i = 0; i < num_points; i++) {
-        float x_i = x(i);
-        if (x_i > result) result = x_i;
-    }
-    return result;
+float Shape::distance(uint8_t i, float px, float py) const {
+    float x_i = x(i);
+    float y_i = y(i);
+    return sqrt((x_i - px) * (x_i - px) + (y_i - py) * (y_i - py));
 }
 
-float Shape::min_y() const {
-    float result = 1;
-    for (int i = 0; i < num_points; i++) {
-        float y_i = y(i);
-        if (y_i < result) result = y_i;
+float Shape::min_projection(float px, float py) const {
+    float proj_min = 100;
+    for (uint8_t i = 0; i < num_points; i++) {
+        float p = projection(i, px, py);
+        if (p < proj_min) proj_min = p;
     }
-    return result;
+    return proj_min;
 }
 
-float Shape::max_y() const {
-    float result = -1;
-    for (int i = 0; i < num_points; i++) {
-        float y_i = y(i);
-        if (y_i > result) result = y_i;
+float Shape::max_projection(float px, float py) const {
+    float proj_max = -100;
+    for (uint8_t i = 0; i < num_points; i++) {
+        float p = projection(i, px, py);
+        if (p > proj_max) proj_max = p;
     }
-    return result;
+    return proj_max;
 }
 
-float Shape::min_r() const {
-    float result = 1;
-    for (int i = 0; i < num_points; i++) {
-        float r_i = r(i);
-        if (r_i < result) result = r_i;
+float Shape::min_distance(float px, float py) const {
+    float x_i, y_i;
+    float dist_min = 100;
+    for (uint8_t i = 0; i < num_points; i++) {
+        float d = (x_i - px) * (x_i - px) + (y_i - py) * (y_i - py);
+        if (d < dist_min) dist_min = d;
     }
-    return result;
+    return sqrt(dist_min);
 }
 
-float Shape::max_r() const {
-    float result = 0;
-    for (int i = 0; i < num_points; i++) {
-        float r_i = r(i);
-        if (r_i > result) result = r_i;
+float Shape::max_distance(float px, float py) const {
+    float x_i, y_i;
+    float dist_max = 0;
+    for (uint8_t i = 0; i < num_points; i++) {
+        float d = (x_i - px) * (x_i - px) + (y_i - py) * (y_i - py);
+        if (d > dist_max) dist_max = d;
     }
-    return result;
+    return sqrt(dist_max);
 }
 }  // namespace LEDGeometry

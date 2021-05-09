@@ -1,10 +1,12 @@
 #pragma once
+#include <stdint.h>
+
 #include "Shape.h"
 
 namespace LEDGeometry {
 /**
- * Constructs a shape using coordinates.
- * CustomShape does not own the coordinates, so make the coordinates global or
+ * Constructs a shape using int16_ts.
+ * CustomShape does not own the int16_ts, so make the int16_ts global or
  * keep them on the heap.
  */
 class CustomShape : public Shape {
@@ -13,9 +15,9 @@ class CustomShape : public Shape {
         : Shape(num_points), x_coords(x), y_coords(y) {}
 
     // x coordinate, -1 <= x <= 1
-    float x(int i) const { return (float)x_coords[i] / 10000; }
+    float x(uint8_t i) const { return (float)x_coords[i] / 10000; }
     // y coordinate, -1 <= y <= 1
-    float y(int i) const { return (float)y_coords[i] / 10000; };
+    float y(uint8_t i) const { return (float)y_coords[i] / 10000; };
 
    private:
     int16_t* x_coords;
