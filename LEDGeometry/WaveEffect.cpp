@@ -12,7 +12,8 @@ WaveEffect::WaveEffect(CRGB* spectrum, uint8_t resolution, uint8_t* projection,
     : spectrum(spectrum),
       resolution(resolution),
       projection(projection),
-      frequency(frequency) {
+      frequency(frequency),
+      phase(0) {
     for (int i = 0; i < resolution; i++) {
         spectrum[i] = CRGB::Black;
     }
@@ -24,9 +25,8 @@ void WaveEffect::update(LEDCurve* led_curve) {
     }
     propagate();
     spectrum[0] = led_curve->color_scheduler->next_color();
-    uint8_t phase =
-        qmul8(frequency, led_curve->color_scheduler->get_progress());
     spectrum[0].fadeLightBy(quadwave8(phase));
+    phase += frequency;
 }
 
 void WaveEffect::propagate() {

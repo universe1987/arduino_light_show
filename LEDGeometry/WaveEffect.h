@@ -22,5 +22,6 @@ class WaveEffect : public LightEffect {
     uint8_t resolution;
     uint8_t* projection;
     uint8_t frequency;
+    uint8_t phase;
 };
 }  // namespace LEDGeometry

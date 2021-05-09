@@ -62,15 +62,14 @@ void loop() {
   my_light.set_effect((LightEffect*)&mono, 10, duration);
   // 2. Signal transmission effect 20fps for 30s.
   my_light.set_effect((LightEffect*)&transmission, 20, duration);
-  // 3. Pulse effect 16fps for 30s.
+  // 3. Ripple effect 20fps for 30s, center is randomly chosen.
+  radial_projection((Shape*)&heart_shape, byte_buffer, COLOR_BUFFER_SIZE);
+  my_light.set_effect((LightEffect*)&ripple, 20, duration);
+  // 4. Pulse effect 16fps for 30s.
   color_scheduler.set_cycle(120);
   my_light.set_effect((LightEffect*)&pulse, 16, duration);
-  color_scheduler.set_cycle(200);
-  // 4. Ripple effect 20fps for 30s, center is randomly chosen.
-  radial_projection((Shape*)&heart_shape, byte_buffer, RESOLUTION);
-  my_light.set_effect((LightEffect*)&ripple, 20, duration);
   // 5. Tide effect 20fps for 30s, projection direction is randomly chosen.
-  parallel_projection((Shape*)&heart_shape, byte_buffer, RESOLUTION);
+  parallel_projection((Shape*)&heart_shape, byte_buffer, COLOR_BUFFER_SIZE);
   my_light.set_effect((LightEffect*)&tide, 20, duration);
   // 6. Spiral effect 15 fps for 30s, looks better under discrete mode.
   color_scheduler.set_discrete_mode();
