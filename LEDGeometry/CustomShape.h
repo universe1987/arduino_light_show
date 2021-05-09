@@ -15,9 +15,9 @@ class CustomShape : public Shape {
         : Shape(num_points), x_coords(x), y_coords(y) {}
 
     // x coordinate, -1 <= x <= 1
-    float x(uint8_t i) const { return (float)x_coords[i] / 10000; }
+    float x(int i) const { return (float)x_coords[i] / 10000; }
     // y coordinate, -1 <= y <= 1
-    float y(uint8_t i) const { return (float)y_coords[i] / 10000; };
+    float y(int i) const { return (float)y_coords[i] / 10000; };
 
    private:
     int16_t* x_coords;
